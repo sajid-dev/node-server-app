@@ -14,7 +14,11 @@ app.use((req, res, next) => {
   var log = `${now}: ${req.method} ${req.url}`;
   console.log(log);
 
-  fs.appendFile('server.log', log + "\n");
+  fs.appendFile('server.log', log + "\n", (err) => {
+    if (err) {
+      throw err;
+    }
+  });
   next();
 })
 
@@ -30,7 +34,11 @@ app.get('/', (req, res) => {
 })
 
 app.get('/about', (req, res) => {
-  res.send('Sajid Page');
+  res.render('about');
+})
+
+app.get('/contact', (req, res) => {
+  res.render('contact');
 })
 
 app.get('/bad', (req, res) => {
